@@ -16,6 +16,10 @@
 
 /* General purpose input output port A macros */
 //GPIOA peripheral base address
+#define led_pin 4
+#define pb_pin 3
+#define clock_enabled_pA 17
+
 #define	GPIOA_BASE_ADDR			/* Add GPIO A peripheral base address here. */
 //MODER register
 #define	GPIOA_MODER_REG			/* Add moder register address here. */
@@ -41,7 +45,7 @@
 #define	RCC_AHBENR_REG			/* Add ahben register address here. */
 
 /* LED and button macros */
-#define LED_ON					/* Add LED_ON implementation here. */
+#define LED_ON				*(volatile)(GPIOA_BSRR_REG)	/* Add LED_ON implementation here. */
 #define LED_OFF					/* Add LED_OFF implementation here. */
 
 #define BUTTON_GET_STATE		/* Add BUTTON_GET_STATE implementation here. */
