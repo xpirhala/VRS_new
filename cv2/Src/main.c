@@ -22,19 +22,6 @@
 #include "main.h"
 #include "assignment.h"
 
-#define led_pin 3
-#define push_button 6
-#define port_b (uint32_t) 0x48000400
-#define speed (uint32_t )0x08
-#define type_select_od_pp (uint32_t )0x04
-#define pu_pd_reg (uint32_t ) 0x0C
-#define input_data (uint32_t ) 0x10
-#define bssr_reg (uint32_t ) 0x18
-#define brreg (uint32_t ) 0x28
-
-
-
-
 int main(void)
 {
   /*
@@ -62,7 +49,32 @@ int main(void)
 
 	//type your code for GPIOA clock enable here:
 
+  /*Enables clock for GPIO port B*/
+  *((volatile uint32_t *) (uint32_t)(RCC_BASE_ADDR + RCC_AHBENR_REG)) |= (uint32_t)(1 << clock_enable_pA);
 
+  /* GPIOA pin 3 and 4 setup */
+
+	//type your code for GPIOA pins setup here:
+  /*GPIOA pin 3 and 4 setup*/
+  /*GPIO MODER register*/
+  //Set mode for pin 3
+  *((volatile uint32_t *)(GPIOA_BASE_ADDR)) &= ~(uint32_t)(0x3 << push_button_bit);
+  *((volatile uint32_t *)(GPIOA_BASE_ADDR)) |= (uint32_t)(1 << (2*led_pin));
+  //Set mode for pin 4
+  *((volatile uint32_t *)(GPIOA_BASE_ADDR)) &= ~(uint32_t)(0x3 << (2*push_button_bit));
+
+  /*GPIO OTYPER register*/
+  *((volatile uint32_t *)((uint32_t)(GPIOA_BASE_ADDR + GPIOA_OTYPER_REG))) &= ~(1 << led_pin);
+
+  /*GPIO OSPEEDR register*/
+  //Set Low speed for GPIOa pin 3
+  *((volatile uint32_t *)((uint32_t)(GPIOA_BASE_ADDR + GPIOA_OSPEEDER_REG))) &= ~(0x3 <<(2*led_pin));
+
+  /*GPIO PUPDR register, reset*/
+  //Set pull up for GPIOB pin 6 (input)
+  *((volatile uint32_t *)((uint32_t)(GPIOA_BASE_ADDR + GPIOA_PUPDR_REG))) |= (1 << (2*push_button_bit));
+  //Set no pull for GPIOB pin 3
+  *((volatile uint32_t *)((uint32_t)(GPIOA_BASE_ADDR + GPIOA_PUPDR_REG))) &= ~(0x3 << (2*led_pin));
   /* GPIOA pin 3 and 4 setup */
 
 	//type your code for GPIOA pins setup here:
