@@ -22,6 +22,19 @@
 #include "main.h"
 #include "assignment.h"
 
+#define led_pin 3
+#define push_button 6
+#define port_b (uint32_t) 0x48000400
+#define speed (uint32_t )0x08
+#define type_select_od_pp (uint32_t )0x04
+#define pu_pd_reg (uint32_t ) 0x0C
+#define input_data (uint32_t ) 0x10
+#define bssr_reg (uint32_t ) 0x18
+#define brreg (uint32_t ) 0x28
+
+
+
+
 int main(void)
 {
   /*
